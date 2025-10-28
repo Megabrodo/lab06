@@ -1,10 +1,12 @@
 package it.unibo.generics.graph;
 
 import it.unibo.generics.graph.api.Graph;
+import it.unibo.generics.graph.api.GraphImpl;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Scanner;
 
 /**
  *
@@ -25,13 +27,16 @@ public final class UseGraph {
      *            ignored
      */
     public static void main(final String... args) {
+        Graph<String>graph = new GraphImpl<>();
         /*
          * Test your graph implementation(s) by calling testGraph
          */
-        testGraph(null);
+        testGraph(graph);
     }
 
     private static void testGraph(final Graph<String> graph) {
+        Scanner scanner = new Scanner(System.in);
+
         graph.addNode(A);
         graph.addNode(B);
         graph.addNode(C);
@@ -54,11 +59,18 @@ public final class UseGraph {
         /*
          * Either the path b,c,a or b,c,d,e,a
          */
+
+        System.out.println("Insert what kind of algorithm you want to use\n");
+        System.out.println("0 for dfs, 1 for bfs: \t");
+        int decision = scanner.nextInt();
+
         assertIsAnyOf(
-            graph.getPath(B, A),
+            graph.getPath(B, A, decision),
             Arrays.asList(B, C, A),
             Arrays.asList(B, C, D, E, A)
         );
+
+        scanner.close();
     }
 
     private static void assertIsAnyOf(final Object actual, final Object... valid) {
